@@ -1,9 +1,14 @@
 import redis
 
-redisCli = redis.Redis(host='127.0.0.1', port=6005)
+redisCli = redis.Redis(host='127.0.0.1', port=6379)
 
 stream_key = 'driver_geolocation'
 group = 'route_calculator'
+
+try:
+    redisCli.xgroup_create( name=stream_key, groupname=group, id=0 )
+except:
+    print("Consumer already exists")
 
 while True:
     resp = redisCli.xreadgroup( groupname=group, consumername='c', block=500, streams={stream_key:'>'}, count=500)

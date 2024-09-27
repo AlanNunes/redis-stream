@@ -12,7 +12,7 @@ async def send_geolocation(redisCli):
 
 async def main():
     group = 'route_calculator'
-    redisCli = redis.Redis(host='127.0.0.1', port=6005)
+    redisCli = redis.Redis(host='127.0.0.1', port=6379)
 
     try:
         redisCli.xgroup_create( name=stream_key, groupname=group, id=0 )
